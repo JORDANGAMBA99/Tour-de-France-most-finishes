@@ -1,0 +1,34 @@
+#Analyzing tour de france data
+#In this csv contains information about the year,dates,stages,distance,starter and finishes
+#Determine which year had the most number number of finishes in the history of Tour de france
+import matplotlib.pyplot as plt
+from plotly.graph_objs import Bar,Layout
+from plotly import offline
+import csv
+filename ='D:\Data Science e-books/tdf_tours.csv'
+with open (filename)as f:
+    reader = csv.reader(f)
+    header_row = next(reader)
+    print(header_row)
+    
+    for index,column_header in enumerate(header_row):
+        print(index,column_header)
+    
+    #Determine which year had the most number number of finishes
+    Finishes,Years= [],[]
+    for row in reader:
+        Finish = int(row[5])
+        Year = int(row[0])
+        Finishes.append(Finish)
+        Years.append(Year)
+    print(Finishes,Years)
+  
+    #Visualize the results 
+    x_values = list(Years)
+    data = [Bar(x = x_values,y=Finishes)]
+    
+    x_axis_config = {'title':'Years and Years','dtick':4}
+    y_axis_config = {'title':"Finishes"}
+    
+    my_layout = Layout(title = ' Determine which year had the most number number of finishes',xaxis = x_axis_config,yaxis=y_axis_config)
+    offline.plot({'data':data,'layout':my_layout},filename='d7_d10.html')
